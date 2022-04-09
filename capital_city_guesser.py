@@ -11,8 +11,8 @@ class GuesserApp:
 
 
     def __initialize_continents_dict(self):
-        self.continents = list(self.__get_countries_by_continent())
-        self.continents = list(self.__add_capitals_to_continent_countries())
+        continents = self.__get_countries_by_continent()
+        self.continents = list(self.__add_capitals_to_continent_countries(continents))
 
 
     def __get_countries_by_continent(self):
@@ -20,8 +20,8 @@ class GuesserApp:
         return filter(lambda c: "Antarctica" not in c["Continent"]["sName"], all_continents)
 
 
-    def __add_capitals_to_continent_countries(self):
-        return map(lambda c : self.__add_capitals_to_continent(c), self.continents)
+    def __add_capitals_to_continent_countries(self, continents):
+        return map(lambda c : self.__add_capitals_to_continent(c), continents)
 
 
     def __add_capitals_to_continent(self, c):
