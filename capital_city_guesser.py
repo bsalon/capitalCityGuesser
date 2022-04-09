@@ -12,7 +12,8 @@ class GuesserApp:
 
     def __initialize_continents_dict(self):
         continents = self.__get_countries_by_continent()
-        self.continents = list(self.__add_capitals_to_continent_countries(continents))
+        continents_with_capitals = self.__add_capitals_to_continent_countries(continents)
+        self.continents = list(continents_with_capitals)
 
 
     def __get_countries_by_continent(self):
