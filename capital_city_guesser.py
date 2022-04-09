@@ -7,6 +7,10 @@ import zeep
 class GuesserApp:
     def __init__(self):
         self.client = zeep.Client("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
+        self.__initialize_continents_dict()
+
+
+    def __initialize_continents_dict(self):
         self.continents = list(self.__get_countries_by_continent())
         self.__add_capitals_to_continent_countries()
 
