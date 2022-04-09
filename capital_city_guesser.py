@@ -1,6 +1,8 @@
 #!/usr/bin/env python3.7
 
+
 import zeep
+
 
 class GuesserApp:
     def __init__(self):
@@ -8,12 +10,15 @@ class GuesserApp:
         self.continents = list(self.__get_countries_by_continent())
         self.__add_capitals_to_continent_countries()
 
+
     def __get_countries_by_continent(self):
         all_continents = self.client.service.ListOfCountryNamesGroupedByContinent()
         return filter(lambda c: "Antarctica" not in c["Continent"]["sName"], all_continents)
 
+
     def __add_capitals_to_continent_countries(self):
         self.continents = list(map(lambda c : self.__add_capitals_to_continent(c), self.continents))
+
 
     def __add_capitals_to_continent(self, c):
         for i in range(len(c['CountryCodeAndNames']['tCountryCodeAndName'])):
@@ -22,13 +27,16 @@ class GuesserApp:
             country['sCapitalCity'] = self.client.service.CapitalCity(country_ISOCode)
         return c
 
+
     def run(self):
         pass
+
 
 
 def main():
     guesser_app = GuesserApp()
     guesser_app.run()
+
 
 if __name__ == "__main__":
     main()
