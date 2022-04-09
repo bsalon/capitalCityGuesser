@@ -5,9 +5,9 @@ import zeep
 class GuesserApp:
     def __init__(self):
         self.client = zeep.Client("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
-        self.continents = list(self.get_countries_by_continent())
+        self.continents = list(self.__get_countries_by_continent())
 
-    def get_countries_by_continent(self):
+    def __get_countries_by_continent(self):
         all_continents = self.client.service.ListOfCountryNamesGroupedByContinent()
         return filter(lambda x: "Antarctica" not in x["Continent"]["sName"], all_continents)
 
