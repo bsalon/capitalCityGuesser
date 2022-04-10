@@ -1,7 +1,7 @@
 import zeep
 
 
-class GuesserApp:
+class CountryClient:
     def __init__(self):
         self.client = zeep.Client("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
         self.__initialize_continents_dict()
