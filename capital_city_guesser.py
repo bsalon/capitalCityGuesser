@@ -1,6 +1,3 @@
-#!/usr/bin/env python3.7
-
-
 import zeep
 
 
@@ -46,12 +43,3 @@ class GuesserApp:
             country_ISOCode = country['sISOCode']
             country['sCapitalCity'] = self.client.service.CapitalCity(country_ISOCode)
         return c
-
-
-
-def main():
-    guesser_app = GuesserApp()
-
-
-if __name__ == "__main__":
-    main()
