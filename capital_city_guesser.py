@@ -48,14 +48,9 @@ class GuesserApp:
         return c
 
 
-    def run(self):
-        pass
-
-
 
 def main():
     guesser_app = GuesserApp()
-    guesser_app.run()
 
 
 if __name__ == "__main__":
