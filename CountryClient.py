@@ -1,9 +1,9 @@
 import zeep
 
 
-class CountryClient:
-    def __init__(self):
-        self.client = zeep.Client("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
+class CountryClient(zeep.Client):
+    def __init__(self, *args, **kwargs):
+        super(CountryClient, self).__init__(*args, **kwargs)
         self.__initialize_continents_dict()
 
 
@@ -15,7 +15,7 @@ class CountryClient:
 
 
     def __get_countries_by_continent(self):
-        all_continents = self.client.service.ListOfCountryNamesGroupedByContinent()
+        all_continents = self.service.ListOfCountryNamesGroupedByContinent()
         return filter(lambda c: "Antarctica" not in c["Continent"]["sName"], all_continents)
 
 
@@ -41,5 +41,5 @@ class CountryClient:
         for i in range(len(c['CountryCodeAndNames']['tCountryCodeAndName'])):
             country = c['CountryCodeAndNames']['tCountryCodeAndName'][i]
             country_ISOCode = country['sISOCode']
-            country['sCapitalCity'] = self.client.service.CapitalCity(country_ISOCode)
+            country['sCapitalCity'] = self.service.CapitalCity(country_ISOCode)
         return c
