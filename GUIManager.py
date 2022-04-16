@@ -23,16 +23,16 @@ class GUIManager(tkinter.Tk):
 
     def __create_startup_frame(self):
         self.startup_frame = ttk.Frame(self)
-        stFrm = self.startup_frame
+        st_frm = self.startup_frame
 
-        _ = ttk.Button(stFrm, text="Show leaderboard", style="leaderboard.TButton").pack(expand=True, fill="both")
-        _ = ttk.Label(stFrm, text="Enter your name:", style="name.TLabel").pack(fill="x")
+        _ = ttk.Button(st_frm, text="Show leaderboard", style="leaderboard.TButton").pack(expand=True, fill="both")
+        _ = ttk.Label(st_frm, text="Enter your name:", style="name.TLabel").pack(fill="x")
 
         self.name = tkinter.StringVar()
-        self.startup_frameNameEntry = ttk.Entry(stFrm, textvariable=self.name)
-        self.startup_frameNameEntry.pack(fill="x")
+        self.name_entry = ttk.Entry(st_frm, textvariable=self.name)
+        self.name_entry.pack(fill="x")
 
-        self.name_confirm_button = ttk.Button(stFrm, text="Confirm", style="confirm_name.TButton", command=self.__getUserName)
+        self.name_confirm_button = ttk.Button(st_frm, text="Confirm", style="confirm_name.TButton", command=self.__get_user_name)
         self.name_confirm_button.pack(fill="x")
 
         self.name.trace("w", self.__on_name_entry_trace)
@@ -51,6 +51,6 @@ class GUIManager(tkinter.Tk):
         self.ttk_style.configure("confirm_name.TButton", font=("Helvetica", 18))
 
 
-    def __getUserName(self):
+    def __get_user_name(self):
         self.startup_frame.pack_forget()
         return self.name.get()
