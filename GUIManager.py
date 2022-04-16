@@ -42,4 +42,5 @@ class GUIManager(tkinter.Tk):
 
 
     def __getUserName(self):
+        self.startup_frame.pack_forget()
         return self.startup_frameNameEntry.get()
