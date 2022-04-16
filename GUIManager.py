@@ -32,7 +32,7 @@ class GUIManager(tkinter.Tk):
         self.username_entry = ttk.Entry(st_frm, textvariable=self.username)
         self.username_entry.pack(fill="x")
 
-        self.username_confirm_button = ttk.Button(st_frm, text="Confirm", style="confirm_username.TButton", command=self.__get_user_name)
+        self.username_confirm_button = ttk.Button(st_frm, text="Confirm", style="confirm_username.TButton", command=self.__get_username)
         self.username_confirm_button.pack(fill="x")
 
         self.username.trace("w", self.__on_username_entry_trace)
@@ -51,6 +51,6 @@ class GUIManager(tkinter.Tk):
         self.ttk_style.configure("confirm_username.TButton", font=("Helvetica", 18))
 
 
-    def __get_user_name(self):
+    def __get_username(self):
         self.startup_frame.pack_forget()
         return self.username.get()
