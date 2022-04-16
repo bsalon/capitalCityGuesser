@@ -28,10 +28,20 @@ class GUIManager(tkinter.Tk):
         _ = ttk.Button(stFrm, text="Show leaderboard", style="leaderboard.TButton").pack(expand=True, fill="both")
         _ = ttk.Label(stFrm, text="Enter your name:", style="name.TLabel").pack(fill="x")
 
-        self.startup_frameNameEntry = ttk.Entry(stFrm)
+        self.name = tkinter.StringVar()
+        self.startup_frameNameEntry = ttk.Entry(stFrm, textvariable=self.name)
         self.startup_frameNameEntry.pack(fill="x")
 
-        _ = ttk.Button(stFrm, text="Confirm", style="confirm_name.TButton", command=self.__getUserName).pack(fill="x")
+        self.name_confirm_button = ttk.Button(stFrm, text="Confirm", style="confirm_name.TButton", command=self.__getUserName)
+        self.name_confirm_button.pack(fill="x")
+
+        self.name.trace("w", self.__on_name_entry_trace)
+        self.name.set("")
+
+
+    def __on_name_entry_trace(self, *args):
+        new_state = "disabled" if self.name.get() == "" else "normal"
+        self.name_confirm_button.config(state=new_state)
 
 
     def __style_configuration(self):
@@ -43,4 +53,4 @@ class GUIManager(tkinter.Tk):
 
     def __getUserName(self):
         self.startup_frame.pack_forget()
-        return self.startup_frameNameEntry.get()
+        return self.name.get()
