@@ -12,17 +12,17 @@ class GUIManager(tkinter.Tk):
 
     def run(self):
         self.__style_configuration()
+        self.__create_startup_frame()
         self.pack_startup_frame()
         self.mainloop()
 
 
     def pack_startup_frame(self):
-        self.startup_frame = ttk.Frame(self)
-        self.__create_startup_frame()
         self.startup_frame.pack(expand=True, fill=tkinter.BOTH)
 
 
     def __create_startup_frame(self):
+        self.startup_frame = ttk.Frame(self)
         stFrm = self.startup_frame
 
         _ = ttk.Button(stFrm, text="Show leaderboard", style="leaderboard.TButton").pack(expand=True, fill="both")
