@@ -14,14 +14,9 @@ class CountryService:
         self.__create_table()
 
 
-    def drop_and_create_table(self):
-        self.drop_table()
-        self.__create_table()
-
-
-    def drop_table(self):
+    def clear_table(self):
         with self.database.connector.cursor(buffered=True) as cursor:
-            cursor.execute(f"DROP TABLE {self.table_name}")
+            cursor.execute(f"DELETE FROM {table_name}")
 
 
     def insert_countries(self, countries):
