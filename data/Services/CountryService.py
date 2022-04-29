@@ -22,3 +22,11 @@ class CountryService:
             if (self.table_name not in db_tables):
                 create_table_query = QueryFactory.create_create_table_query(self.table_name, self.column_tuples)
                 cursor.execute(create_table_query)
+
+
+    def insert_countries(self, countries):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            insert_query = QueryFactory.create_insert_query(self.table_name, self.column_tuples)
+            cursor.executemany(insert_query, countries)
+
+        self.database.commit()
