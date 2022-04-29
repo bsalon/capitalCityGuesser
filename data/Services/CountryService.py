@@ -24,7 +24,7 @@ class CountryService:
             insert_query = QueryFactory.create_insert_query(self.table_name, self.column_tuples)
             cursor.executemany(insert_query, countries)
 
-        self.database.commit()
+        self.database.connector.commit()
 
 
     def __create_table(self):
