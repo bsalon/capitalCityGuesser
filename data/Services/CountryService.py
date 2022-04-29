@@ -24,6 +24,11 @@ class CountryService:
                 cursor.execute(create_table_query)
 
 
+    def drop_and_create_table(self):
+        self.drop_table()
+        self.__create_table()
+
+
     def drop_table(self):
         with self.database.connector.cursor(buffered=True) as cursor:
             cursor.execute(f"DROP TABLE {self.table_name}")
