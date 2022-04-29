@@ -19,7 +19,8 @@ class CountryService:
 
     def has_at_least_rows(self, rows_count):
         with self.database.connector.cursor(buffered=True) as cursor:
-            cursor.execute(f"SELECT * FROM {self.table_name}")
+            select_query = QueryFactory.create_select_query(self.table_name, self.column_tuples)
+            cursor.execute(select_query)
             data = cursor.fetchall()
             return len(data) >= rows_count
 
@@ -39,7 +40,8 @@ class CountryService:
 
     def get_all_countries(self):
         with self.database.connector.cursor(buffered=True) as cursor:
-            cursor.execute(f"SELECT * FROM {self.table_name}")
+            select_query = QueryFactory.create_select_query(self.table_name, self.column_tuples)
+            cursor.execute(select_query)
             all_data = cursor.fetchall()
             all_countries = list(map(lambda c : Country(c[0], c[1], c[2], c[3]), all_data))
             return all_countries

@@ -11,6 +11,11 @@ class QueryFactory:
         return f"INSERT INTO {table_name} {table_column_names} VALUES {placeholders}"
 
 
+    def create_select_query(table_name, column_tuples):
+        table_column_names = QueryFactory.__parse_column_names(column_tuples)[1:-1]
+        return f"SELECT {table_column_names} FROM {table_name}"
+
+
     def __filter_generated_columns(column_tuples):
         return [(col, t_col) for col, t_col in column_tuples if ("AUTO" not in t_col and "GENERATED" not in t_col)]
 
