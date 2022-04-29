@@ -1,4 +1,7 @@
 from ..Database import Database
+
+from ..Entities.Country import Country
+
 from .QueryFactory import QueryFactory
 
 
@@ -32,6 +35,14 @@ class CountryService:
             cursor.executemany(insert_query, countries)
 
         self.database.connector.commit()
+
+
+    def get_all_countries(self):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            cursor.execute(f"SELECT * FROM {self.table_name}")
+            all_data = cursor.fetchall()
+            all_countries = list(map(lambda c : Country(c[0], c[1], c[2], c[3]), all_data))
+            return all_countries
 
 
     def __create_table(self):
