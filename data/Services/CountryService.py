@@ -24,6 +24,11 @@ class CountryService:
                 cursor.execute(create_table_query)
 
 
+    def drop_table(self):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            cursor.execute(f"DROP TABLE {self.table_name}")
+
+
     def insert_countries(self, countries):
         with self.database.connector.cursor(buffered=True) as cursor:
             insert_query = QueryFactory.create_insert_query(self.table_name, self.column_tuples)
