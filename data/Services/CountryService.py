@@ -14,16 +14,6 @@ class CountryService:
         self.__create_table()
 
 
-    def __create_table(self):
-        with self.database.connector.cursor(buffered=True) as cursor:
-            cursor.execute("SHOW TABLES")
-
-            db_tables = (table[0] for table in cursor)
-            if (self.table_name not in db_tables):
-                create_table_query = QueryFactory.create_create_table_query(self.table_name, self.column_tuples)
-                cursor.execute(create_table_query)
-
-
     def drop_and_create_table(self):
         self.drop_table()
         self.__create_table()
@@ -40,3 +30,13 @@ class CountryService:
             cursor.executemany(insert_query, countries)
 
         self.database.commit()
+
+
+    def __create_table(self):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            cursor.execute("SHOW TABLES")
+
+            db_tables = (table[0] for table in cursor)
+            if (self.table_name not in db_tables):
+                create_table_query = QueryFactory.create_create_table_query(self.table_name, self.column_tuples)
+                cursor.execute(create_table_query)
