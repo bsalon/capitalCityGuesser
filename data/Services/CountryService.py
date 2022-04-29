@@ -14,6 +14,13 @@ class CountryService:
         self.__create_table()
 
 
+    def has_at_least_rows(self, rows_count):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            cursor.execute(f"SELECT * FROM {self.table_name}")
+            data = cursor.fetchall()
+            return len(data) >= rows_count
+
+
     def clear_table(self):
         with self.database.connector.cursor(buffered=True) as cursor:
             cursor.execute(f"DELETE FROM {self.table_name}")
