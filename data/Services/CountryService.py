@@ -16,7 +16,7 @@ class CountryService:
 
     def clear_table(self):
         with self.database.connector.cursor(buffered=True) as cursor:
-            cursor.execute(f"DELETE FROM {table_name}")
+            cursor.execute(f"DELETE FROM {self.table_name}")
 
 
     def insert_countries(self, countries):
