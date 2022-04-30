@@ -12,8 +12,12 @@ def main():
         country_service.clear_table()
         country_service.insert_countries(list(countries))
 
-    for country in country_service.get_all_countries():
-        print(country)
+    if False:
+        for country in country_service.get_all_countries():
+            print(country)
+    else:
+        for country in country_service.get_countries_with_continents(["Ocenania", "Europe"]):
+            print(country)
 
 
 if __name__ == "__main__":
