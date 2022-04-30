@@ -38,6 +38,16 @@ class CountryService:
         self.database.connector.commit()
 
 
+    def get_countries_with_continents(self, continents):
+        with self.database.connector.cursor(buffered=True) as cursor:
+            select_where_string_query = QueryFactory.create_select_where_string_query(self.table_name, self.column_tuples, 2, continents)
+            print(select_where_string_query)
+            cursor.execute(select_where_string_query)
+            data = cursor.fetchall()
+            countries = list(map(lambda c : Country(c[0], c[1], c[2], c[3]), data))
+            return countries
+
+
     def get_all_countries(self):
         with self.database.connector.cursor(buffered=True) as cursor:
             select_query = QueryFactory.create_select_query(self.table_name, self.column_tuples)

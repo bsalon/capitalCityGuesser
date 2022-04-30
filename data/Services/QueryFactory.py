@@ -16,6 +16,17 @@ class QueryFactory:
         return f"SELECT {table_column_names} FROM {table_name}"
 
 
+    def create_select_where_string_query(table_name, column_tuples, column_index, column_values):
+        table_column_names = QueryFactory.__parse_column_names(column_tuples)
+        where_column = QueryFactory.__parse_column_names([column_tuples[column_index]])
+        constraints = QueryFactory.__create_where_string_constraints(where_column, column_values)
+        return f"SELECT {table_column_names} FROM {table_name} WHERE {constraints}"
+
+
+    def __create_where_string_constraints(where_column, column_values):
+        return " OR ".join([f"{where_column}='{val}'" for val in column_values])
+
+
     def __filter_generated_columns(column_tuples):
         return [(col, t_col) for col, t_col in column_tuples if ("AUTO" not in t_col and "GENERATED" not in t_col)]
 
