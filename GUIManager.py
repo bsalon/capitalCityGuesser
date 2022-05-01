@@ -53,14 +53,10 @@ class GUIManager(tkinter.Tk):
         self.guess_capital_label = ttk.Label(gu_frm, text=f"What is the capital city of", style="question.TLabel", anchor="center")
         self.guess_capital_label.pack(expand=True, fill="x")
 
-        self.guess_option_one = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=0)
-        self.guess_option_one.pack(fill="x")
-        self.guess_option_two = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=1)
-        self.guess_option_two.pack(fill="x")
-        self.guess_option_three = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=2)
-        self.guess_option_three.pack(fill="x")
-        self.guess_option_four = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=3)
-        self.guess_option_four.pack(fill="x")
+        self.guess_options = []
+        for i in range(4):
+            self.guess_options.append(ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=i))
+            self.guess_options[i].pack(fill="x")
 
         self.guess_button = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton")
         self.guess_button.pack(fill="x")
