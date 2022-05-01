@@ -2,6 +2,9 @@ import tkinter
 
 from tkinter import ttk
 
+from data.Services.CountryService import CountryService
+from GuessDataGenerator import GuessDataGenerator
+
 
 class GUIManager(tkinter.Tk):
     def __init__(self, *args, **kwargs):
@@ -50,7 +53,7 @@ class GUIManager(tkinter.Tk):
         index = tkinter.IntVar()
         index.set(-1)
 
-        self.guess_capital_label = ttk.Label(gu_frm, text=f"What is the capital city of", style="question.TLabel", anchor="center")
+        self.guess_capital_label = ttk.Label(gu_frm, text="What is the capital city of", style="question.TLabel", anchor="center")
         self.guess_capital_label.pack(expand=True, fill="x")
 
         self.guess_options = []
@@ -58,8 +61,39 @@ class GUIManager(tkinter.Tk):
             self.guess_options.append(ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=i))
             self.guess_options[i].pack(fill="x")
 
-        self.guess_button = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton")
+        guess_data = self.__generate_guess_data()
+        guess_frame_courutine = self.__create_guess_frame_courutine(guess_data)
+
+        self.guess_button = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton", command=lambda: self.next_guess_frame(guess_frame_courutine))
         self.guess_button.pack(fill="x")
+        guess_frame_courutine.send(None)
+
+
+    def next_guess_frame(self, guess_frame_courutine):
+        try:
+            guess_frame_courutine.send(None)
+        except StopIteration as si:
+            self.startup_frame.pack_forget()
+            self.__create_results_frame()
+            self.results_frame.pack()
+
+
+    def __create_results_frame(self):
+        self.results_frame = ttk.Frame(self)
+
+
+    def __create_guess_frame_courutine(self, guess_data):
+        index = 0
+        while index < len(guess_data):
+            countries, correct = guess_data[index]
+            correct_country = countries[correct]
+
+            self.guess_capital_label.config(text = f"What is the capital city of {correct_country.name}")
+            for i in range(len(countries)):
+                self.guess_options[i].config(text = f"{countries[i].capital_city}")
+
+            index += 1
+            next_frame = yield
 
 
     def __on_username_entry_trace(self, *args):
@@ -89,3 +123,9 @@ class GUIManager(tkinter.Tk):
         self.__create_guess_frame()
         self.pack_guess_frame()
         return self.username.get()
+
+
+    def __generate_guess_data(self):
+        country_service = CountryService()
+        guess_data_generator = GuessDataGenerator(country_service)
+        return guess_data_generator.generate_guess_data(10, 4)
