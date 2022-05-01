@@ -50,12 +50,20 @@ class GUIManager(tkinter.Tk):
         index = tkinter.IntVar()
         index.set(-1)
 
-        _ = ttk.Label(gu_frm, text=f"What is the capital city of", style="question.TLabel", anchor="center").pack(expand=True, fill="x")
-        _ = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=0).pack(fill="x")
-        _ = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=1).pack(fill="x")
-        _ = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=2).pack(fill="x")
-        _ = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=3).pack(fill="x")
-        _ = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton").pack(fill="x")
+        self.guess_capital_label = ttk.Label(gu_frm, text=f"What is the capital city of", style="question.TLabel", anchor="center")
+        self.guess_capital_label.pack(expand=True, fill="x")
+
+        self.guess_option_one = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=0)
+        self.guess_option_one.pack(fill="x")
+        self.guess_option_two = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=1)
+        self.guess_option_two.pack(fill="x")
+        self.guess_option_three = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=2)
+        self.guess_option_three.pack(fill="x")
+        self.guess_option_four = ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=3)
+        self.guess_option_four.pack(fill="x")
+
+        self.guess_button = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton")
+        self.guess_button.pack(fill="x")
 
 
     def __on_username_entry_trace(self, *args):
