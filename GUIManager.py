@@ -83,9 +83,17 @@ class GUIManager(tkinter.Tk):
 
     def __create_results_frame(self):
         self.results_frame = ttk.Frame(self)
-        correct = len([i for i in range(len(self.guess_data)) if self.guess_data[i][1] == self.answers[i]])
-        result_label = ttk.Label(self.results_frame, text=f"You have got {correct} correct answers:", style="correct.TLabel", anchor="center")
+        correct = [i for i in range(len(self.guess_data)) if self.guess_data[i][1] == self.answers[i]]
+        result_label = ttk.Label(self.results_frame, text=f"You have got {len(correct)} correct answers:", style="correct.TLabel", anchor="center")
         result_label.pack(expand=True, fill="x")
+        for i in range(len(self.guess_data)):
+            countries, correct_index = self.guess_data[i]
+            correct_country = countries[correct_index]
+            if i in correct:
+                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (correct)").pack(fill="x")
+            else:
+                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (not {countries[self.answers[i]].capital_city})").pack(fill="x")
+
 
 
     def __create_guess_frame_courutine(self, guess_data):
