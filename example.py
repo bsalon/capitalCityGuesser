@@ -3,6 +3,9 @@
 from data.CountryClient import CountryClient
 from data.Services.CountryService import CountryService
 
+from GUIManager import GUIManager
+
+
 def main():
     country_client = CountryClient("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
     countries = country_client.countries
@@ -18,6 +21,9 @@ def main():
     else:
         for country in country_service.get_countries_with_continents(["Ocenania", "Europe"]):
             print(country)
+
+    gui = GUIManager()
+    gui.run()
 
 
 if __name__ == "__main__":
