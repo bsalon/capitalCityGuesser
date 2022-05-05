@@ -63,8 +63,8 @@ class GUIManager(tkinter.Tk):
             self.guess_options.append(ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=self.index, value=i))
             self.guess_options[i].pack(fill="x")
 
-        guess_data = self.__generate_guess_data()
-        guess_frame_courutine = self.__create_guess_frame_courutine(guess_data)
+        self.guess_data = self.__generate_guess_data()
+        guess_frame_courutine = self.__create_guess_frame_courutine(self.guess_data)
 
         self.guess_button = ttk.Button(gu_frm, text="confirm", style="confirm_username.TButton", command=lambda: self.next_guess_frame(guess_frame_courutine))
         self.guess_button.pack(fill="x")
@@ -72,9 +72,9 @@ class GUIManager(tkinter.Tk):
 
 
     def next_guess_frame(self, guess_frame_courutine):
+        self.answers.append(self.index.get())
         try:
             guess_frame_courutine.send(None)
-            self.answers.append(self.index)
         except StopIteration as si:
             self.guess_frame.pack_forget()
             self.__create_results_frame()
@@ -83,7 +83,7 @@ class GUIManager(tkinter.Tk):
 
     def __create_results_frame(self):
         self.results_frame = ttk.Frame(self)
-        correct = 0
+        correct = len([i for i in range(len(self.guess_data)) if self.guess_data[i][1] == self.answers[i]])
         result_label = ttk.Label(self.results_frame, text=f"You have got {correct} correct answers", anchor="center")
         result_label.pack(expand=True, fill="x")
 
