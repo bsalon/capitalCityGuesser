@@ -90,9 +90,9 @@ class GUIManager(tkinter.Tk):
             countries, correct_index = self.guess_data[i]
             correct_country = countries[correct_index]
             if i in correct:
-                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (correct)").pack(fill="x")
+                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (correct)", style="correct.TLabel").pack(fill="x")
             else:
-                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (not {countries[self.answers[i]].capital_city})").pack(fill="x")
+                ttk.Label(self.results_frame, text=f"Capital city of {correct_country.name} is {correct_country.capital_city} (not {countries[self.answers[i]].capital_city})", style="correct.TLabel").pack(fill="x")
 
 
 
@@ -131,6 +131,7 @@ class GUIManager(tkinter.Tk):
         self.ttk_style.map("guess.TRadiobutton",
                            background=[("selected", "white"), ("active", "#ececec")])
         self.ttk_style.configure("result.TLabel", font=("Times New Roman", 28))
+        self.ttk_style.configure("correct.TLabel", font=("Times New Roman", 12))
 
 
     def __get_username(self):
