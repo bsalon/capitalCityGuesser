@@ -50,15 +50,17 @@ class GUIManager(tkinter.Tk):
         self.guess_frame = ttk.Frame(self)
         gu_frm = self.guess_frame
 
-        index = tkinter.IntVar()
-        index.set(-1)
+        self.answers = []
+
+        self.index = tkinter.IntVar()
+        self.index.set(-1)
 
         self.guess_capital_label = ttk.Label(gu_frm, text="What is the capital city of", style="question.TLabel", anchor="center")
         self.guess_capital_label.pack(expand=True, fill="x")
 
         self.guess_options = []
         for i in range(4):
-            self.guess_options.append(ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=index, value=i))
+            self.guess_options.append(ttk.Radiobutton(gu_frm, text="test", style="guess.TRadiobutton", variable=self.index, value=i))
             self.guess_options[i].pack(fill="x")
 
         guess_data = self.__generate_guess_data()
@@ -72,14 +74,18 @@ class GUIManager(tkinter.Tk):
     def next_guess_frame(self, guess_frame_courutine):
         try:
             guess_frame_courutine.send(None)
+            self.answers.append(self.index)
         except StopIteration as si:
-            self.startup_frame.pack_forget()
+            self.guess_frame.pack_forget()
             self.__create_results_frame()
             self.results_frame.pack()
 
 
     def __create_results_frame(self):
         self.results_frame = ttk.Frame(self)
+        correct = 0
+        result_label = ttk.Label(self.results_frame, text=f"You have got {correct} correct answers", anchor="center")
+        result_label.pack(expand=True, fill="x")
 
 
     def __create_guess_frame_courutine(self, guess_data):
@@ -128,4 +134,4 @@ class GUIManager(tkinter.Tk):
     def __generate_guess_data(self):
         country_service = CountryService()
         guess_data_generator = GuessDataGenerator(country_service)
-        return guess_data_generator.generate_guess_data(10, 4)
+        return guess_data_generator.generate_guess_data(5, 4)
