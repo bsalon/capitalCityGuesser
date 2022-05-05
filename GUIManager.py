@@ -84,7 +84,7 @@ class GUIManager(tkinter.Tk):
     def __create_results_frame(self):
         self.results_frame = ttk.Frame(self)
         correct = len([i for i in range(len(self.guess_data)) if self.guess_data[i][1] == self.answers[i]])
-        result_label = ttk.Label(self.results_frame, text=f"You have got {correct} correct answers", anchor="center")
+        result_label = ttk.Label(self.results_frame, text=f"You have got {correct} correct answers:", style="correct.TLabel", anchor="center")
         result_label.pack(expand=True, fill="x")
 
 
@@ -122,7 +122,7 @@ class GUIManager(tkinter.Tk):
                                                        padding=5)
         self.ttk_style.map("guess.TRadiobutton",
                            background=[("selected", "white"), ("active", "#ececec")])
-
+        self.ttk_style.configure("correct.TLabel", font=("Times New Roman", 28))
 
     def __get_username(self):
         self.startup_frame.pack_forget()
