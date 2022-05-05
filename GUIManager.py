@@ -39,7 +39,7 @@ class GUIManager(tkinter.Tk):
         self.username_entry = ttk.Entry(st_frm, textvariable=self.username)
         self.username_entry.pack(fill="x")
 
-        self.username_confirm_button = ttk.Button(st_frm, text="Confirm", style="confirm_username.TButton", command=self.__get_username)
+        self.username_confirm_button = ttk.Button(st_frm, text="Confirm", style="confirm_username.TButton", command=self.__start_guessing)
         self.username_confirm_button.pack(fill="x")
 
         self.username.trace("w", self.__on_username_entry_trace)
@@ -134,11 +134,10 @@ class GUIManager(tkinter.Tk):
         self.ttk_style.configure("correct.TLabel", font=("Times New Roman", 12))
 
 
-    def __get_username(self):
+    def __start_guessing(self):
         self.startup_frame.pack_forget()
         self.__create_guess_frame()
         self.pack_guess_frame()
-        return self.username.get()
 
 
     def __generate_guess_data(self):
