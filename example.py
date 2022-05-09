@@ -7,22 +7,26 @@ from GUIManager import GUIManager
 
 
 def main():
+    print("Starting the application")
+    print("Getting the data from the client")
     country_client = CountryClient("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
-    countries = country_client.countries
+    countries = list(country_client.countries)
 
-    country_service = CountryService()
-    if not country_service.has_at_least_rows(100):
-        country_service.clear_table()
-        country_service.insert_countries(list(countries))
+    in_memory = False
+    if not in_memory:
+        country_service = CountryService()
+        if not country_service.has_at_least_rows(100):
+            country_service.clear_table()
+            country_service.insert_countries(list(countries))
 
-    if False:
-        for country in country_service.get_all_countries():
-            print(country)
-    else:
-        for country in country_service.get_countries_with_continents(["Ocenania", "Europe"]):
-            print(country)
+        if False:
+            for country in country_service.get_all_countries():
+                print(country)
+        else:
+            for country in country_service.get_countries_with_continents(["Ocenania", "Europe"]):
+                print(country)
 
-    gui = GUIManager(None)
+    gui = GUIManager(countries if in_memory else None)
     gui.run()
 
 
