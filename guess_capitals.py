@@ -12,7 +12,7 @@ def main():
     country_client = CountryClient("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL")
     countries = list(country_client.countries)
 
-    in_memory = False
+    in_memory = True
     if not in_memory:
         country_service = CountryService()
         if not country_service.has_at_least_rows(100):
