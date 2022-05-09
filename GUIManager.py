@@ -7,8 +7,9 @@ from GuessDataGenerator import GuessDataGenerator
 
 
 class GUIManager(tkinter.Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, in_memory_data, *args, **kwargs):
         super(GUIManager, self).__init__(*args, **kwargs)
+        self.in_memory_data = in_memory_data
         self.geometry("640x480")
         self.title("Capital city guesser")
 
@@ -141,6 +142,10 @@ class GUIManager(tkinter.Tk):
 
 
     def __generate_guess_data(self):
-        country_service = CountryService()
-        guess_data_generator = GuessDataGenerator(country_service)
-        return guess_data_generator.generate_guess_data(5, 4)
+        if self.in_memory_data:
+            all_countries = self.in_memory_data
+            return GuessDataGenerator.generate_guess_data_in_memory(all_countries, 5, 4)
+        else:
+            country_service = CountryService()
+            guess_data_generator = GuessDataGenerator(country_service)
+            return guess_data_generator.generate_guess_data_with_service(5, 4)

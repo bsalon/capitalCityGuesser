@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 
 from data.CountryClient import CountryClient
+from data.Entities.Country import Country
 
 from datetime import datetime
 import random
@@ -10,9 +11,19 @@ class GuessDataGenerator:
     def __init__(self, country_service):
         self.country_service = country_service
 
-    def generate_guess_data(self, guesses, countries):
-        country_map = [(country, False) for country in self.country_service.get_all_countries()]
 
+    def generate_guess_data_with_service(self, guesses, countries):
+        country_map = [(country, False) for country in self.country_service.get_all_countries()]
+        return GuessDataGenerator.generate_guess_data(country_map, guesses, countries)
+
+
+    def generate_guess_data_in_memory(all_countries, guesses, countries):
+        country_objects = list(map(lambda c : Country(-1, c[0], c[1], c[2]), all_countries))
+        country_map = [(country, False) for country in country_objects]
+        return GuessDataGenerator.generate_guess_data(country_map, guesses, countries)
+
+
+    def generate_guess_data(country_map, guesses, countries):
         random.seed(datetime.now())
         guess_data = []
         for i in range(guesses):
