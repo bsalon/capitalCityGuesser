@@ -22,7 +22,7 @@ def main():
         for country in country_service.get_countries_with_continents(["Ocenania", "Europe"]):
             print(country)
 
-    gui = GUIManager()
+    gui = GUIManager(None)
     gui.run()
 
 
